@@ -12,7 +12,7 @@ export async function createHeaders() {
 
   // 🏷️ Section Titles & Positions
   const headers = [
-{ text: 'Experience', position: [50, 2, 0] },
+    { text: 'Experience', position: [50, 2, 10] },
     { text: 'Projects', position: [30, 2, -10] },
     { text: 'Skills', position: [70, 2, -10] },
     { text: 'Contact', position: [50, 2, -20] },
@@ -23,23 +23,24 @@ export async function createHeaders() {
     const geometry = new TextGeometry(text, {
       font: font,
       size: 2,
-      height: 0.3,
-      curveSegments: 12,
+      height: 80,              // Slim depth in Z-direction
+      curveSegments: 10,
       bevelEnabled: false,
     });
 
     // 🎨 Stylize material
     const material = new THREE.MeshStandardMaterial({
-      color: 0xffcc00,     // Golden yellow — tweak for theme
-      metalness: 0.3,      // Slight metallic feel
-      roughness: 0.8,      // Matte-ish finish
+      color: 0xffcc00,          // Golden yellow — tweak for theme
+      metalness: 0.3,
+      roughness: 0.8,
     });
 
     const mesh = new THREE.Mesh(geometry, material);
+    mesh.scale.z = 0.03;         // ✅ Apply depth compression AFTER mesh creation
     mesh.position.set(...position); // Drop into scene
-    mesh.castShadow = true;         // Nice touch for depth
-    group.add(mesh);                // Add to group
+    mesh.castShadow = true;
+    group.add(mesh);
   });
 
-  return group; // Return group for use in main.js
+  return group;
 }
